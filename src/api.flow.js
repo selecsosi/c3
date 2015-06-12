@@ -1,8 +1,18 @@
 c3_chart_fn.flow = function (args) {
-    var $$ = this.internal,
+    var $$ = this.internal, config = this.internal.config,
         targets, data, notfoundIds = [], orgDataCount = $$.getMaxDataCount(),
         dataCount, domain, baseTarget, baseValue, length = 0, tail = 0, diff, to;
 
+    // update xs if specified
+    if (args.xs) {
+        $$.addXs(args.xs);
+    }
+    // update colors if exists
+    if ('colors' in args) {
+        Object.keys(args.colors).forEach(function (id) {
+            config.data_colors[id] = args.colors[id];
+        });
+    }
     if (args.json) {
         data = $$.convertJsonToData(args.json, args.keys);
     }
